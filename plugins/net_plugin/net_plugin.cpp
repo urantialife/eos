@@ -1697,7 +1697,12 @@ namespace eosio {
          if (msg.known_blocks.ids.size() == 0) {
             fc_elog( logger,"got a catch up with ids size = 0" );
          } else {
-            verify_catchup(c, msg.known_blocks.pending, msg.known_blocks.ids.back());
+            if( !verify_catchup(c, msg.known_blocks.pending, msg.known_blocks.ids.back()) ) {
+               request_message req;
+               req.req_blocks.mode = catch_up;
+               req.req_trx.mode = none;
+               c->enqueue( req );
+            }
          }
       } else if (msg.known_blocks.mode == last_irr_catch_up) {
          {
