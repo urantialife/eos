@@ -31,8 +31,6 @@ steps:
     skip: $SKIP_AMAZON_LINUX_2
 
   - label: ":centos: [CentOS] 7 Build"
-    command:
-      - ""
     agents:
       queue: "automation-eos-docker-eof-fleet"
     plugins:
