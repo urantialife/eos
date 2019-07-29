@@ -65,5 +65,7 @@ ENV PRE_COMMANDS="export PATH=/usr/lib/ccache:$PATH &&"
 ENV CMAKE_EXTRAS="-DCMAKE_CXX_COMPILER='clang++' -DCMAKE_C_COMPILER='clang'"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
-    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && make -j $(getconf _NPROCESSORS_ONLN) && \
-    ctest -j$(getconf _NPROCESSORS_ONLN) -LE _tests --output-on-failure -T Test"
+    export MAKE_PROC_LIMIT=${MAKE_PROC_LIMIT:-$(nproc)} && \
+    echo Building with -j$MAKE_PROC_LIMIT && \
+    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && make -j$MAKE_PROC_LIMIT && \
+    ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test"

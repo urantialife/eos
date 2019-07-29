@@ -47,6 +47,7 @@ matrix:
             - ccache
       env: 
         - PATH="/usr/local/opt/ccache/libexec:$PATH"
+        - MAKE_PROC_LIMIT='2'
 script: |
   ./.cicd/travis-build.sh
 notifications:
