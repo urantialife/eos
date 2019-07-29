@@ -60,6 +60,86 @@ steps:
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_18
 
+  - label: ":aws: [Amazon] 2 Build 2"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-amazonlinux-2-1c266e25276ad1f1147a4df5c12921968079c49b"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_AMAZON_LINUX_2
+
+  - label: ":centos: [CentOS] 7 Build 2"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-centos-7-d45789dfb1a5b830a62381afd205b34d3d7c2d63"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_CENTOS_7
+
+  - label: ":ubuntu: [Ubuntu] 16.04 Build 2"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-ubuntu-16.04-4f430ef21e359ef2581c25255c99e5411adfaed9"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_UBUNTU_16
+
+  - label: ":ubuntu: [Ubuntu] 18.04 Build 2"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-ubuntu-18.04-14091ac0e5618b0ea5ce026cd75b648efbde4be7"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_UBUNTU_18
+
+  - label: ":aws: [Amazon] 2 Build 3"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-amazonlinux-2-1c266e25276ad1f1147a4df5c12921968079c49b"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_AMAZON_LINUX_2
+
+  - label: ":centos: [CentOS] 7 Build 3"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-centos-7-d45789dfb1a5b830a62381afd205b34d3d7c2d63"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_CENTOS_7
+
+  - label: ":ubuntu: [Ubuntu] 16.04 Build 3"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-ubuntu-16.04-4f430ef21e359ef2581c25255c99e5411adfaed9"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_UBUNTU_16
+
+  - label: ":ubuntu: [Ubuntu] 18.04 Build 3"
+    agents:
+      queue: "automation-eos-docker-eof-fleet"
+    plugins:
+      - docker#v3.3.0:
+          debug: $DEBUG
+          image: "eosio/producer:eosio-ubuntu-18.04-14091ac0e5618b0ea5ce026cd75b648efbde4be7"
+    timeout: $BUILD_TIMEOUT
+    skip: $SKIP_UBUNTU_18
+
   # - label: ":darwin: [Darwin] 10.14 Build"
   #   command:
   #     - "brew install git graphviz libtool gmp llvm@4 pkgconfig python python@2 doxygen libusb openssl boost@1.70 cmake"
