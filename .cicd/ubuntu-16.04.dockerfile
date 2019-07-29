@@ -87,9 +87,10 @@ RUN curl -LO https://github.com/ccache/ccache/releases/download/v3.4.1/ccache-3.
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="export PATH=/usr/lib/ccache:$PATH &&"
 ENV CMAKE_EXTRAS="$CMAKE_EXTRAS -DCMAKE_TOOLCHAIN_FILE='/tmp/pinned_toolchain.cmake' -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
-    export MAKE_PROC_LIMIT=${MAKE_PROC_LIMIT:-$(nproc)} && \
+    export MAKE_PROC_LIMIT=${MAKE_PROC_LIMIT:-$NPROC} && \
     echo Building with -j$MAKE_PROC_LIMIT && \
     mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && make -j$MAKE_PROC_LIMIT && \
     ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test"
