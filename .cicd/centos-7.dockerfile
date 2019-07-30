@@ -91,10 +91,8 @@ ENV CCACHE_PATH="/opt/rh/devtoolset-8/root/usr/bin"
 # PRE_COMMANDS: Executed pre-cmake
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="source /opt/rh/devtoolset-8/enable && source /opt/rh/rh-python36/enable && export PATH=/usr/lib64/ccache:$PATH &&"
-ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
-    export MAKE_PROC_LIMIT=${MAKE_PROC_LIMIT:-$NPROC} && \
-    echo Building with -j$MAKE_PROC_LIMIT && \
-    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && make -j$MAKE_PROC_LIMIT && \
-    ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test"
+    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && \
+    if [ -z $MAKE_PROC_LIMIT ]; then echo 'using nproc' && make -j$(getconf _NPROCESSORS_ONLN); else make -j$MAKE_PROC_LIMIT; fi && \
+    if [ -z $MAKE_PROC_LIMIT ]; then echo 'using MAKE_PROC_LIMIT' && ctest -j$(getconf _NPROCESSORS_ONLN) -LE _tests --output-on-failure -T Test; else ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test; fi"
