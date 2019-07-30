@@ -63,8 +63,9 @@ ENV PATH=${PATH}:/mongodb-linux-x86_64-ubuntu1804-4.1.1/bin
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="export PATH=/usr/lib/ccache:$PATH &&"
 ENV CMAKE_EXTRAS="-DCMAKE_CXX_COMPILER='clang++' -DCMAKE_C_COMPILER='clang'"
+ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
-    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && \
-    if [ -z $MAKE_PROC_LIMIT ]; then echo 'using nproc' && make -j$(getconf _NPROCESSORS_ONLN); else echo 'using MAKE_PROC_LIMIT' && make -j$MAKE_PROC_LIMIT; fi && \
-    if [ -z $MAKE_PROC_LIMIT ]; then echo 'using nproc' && ctest -j$(getconf _NPROCESSORS_ONLN) -LE _tests --output-on-failure -T Test; else echo 'using MAKE_PROC_LIMIT' && ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test; fi"
+    echo Building with -j$MAKE_PROC_LIMIT && \
+    mkdir /workdir/build && cd /workdir/build && cmake -DCMAKE_BUILD_TYPE='Release' -DCORE_SYMBOL_NAME='SYS' -DOPENSSL_ROOT_DIR='/usr/include/openssl' -DBUILD_MONGO_DB_PLUGIN=true $CMAKE_EXTRAS /workdir && make -j$MAKE_PROC_LIMIT && \
+    ctest -j$MAKE_PROC_LIMIT -LE _tests --output-on-failure -T Test"
