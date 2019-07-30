@@ -15,7 +15,7 @@ steps:
 
   - label: ":aws: [Amazon] 2 Build 1"
     agents:
-      queue: "automation-eos-docker-eof-fleet 1"
+      queue: "automation-eos-docker-eof-fleet"
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
@@ -63,7 +63,7 @@ steps:
 
   - label: ":aws: [Amazon] 2 Build 2"
     agents:
-      queue: "automation-eos-docker-eof-fleet 1"
+      queue: "automation-eos-docker-eof-fleet"
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
@@ -111,7 +111,7 @@ steps:
 
   - label: ":aws: [Amazon] 2 Build 3"
     agents:
-      queue: "automation-eos-docker-eof-fleet 1"
+      queue: "automation-eos-docker-eof-fleet"
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
