@@ -91,7 +91,6 @@ ENV CCACHE_PATH="/opt/rh/devtoolset-8/root/usr/bin"
 # PRE_COMMANDS: Executed pre-cmake
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="source /opt/rh/devtoolset-8/enable && source /opt/rh/rh-python36/enable && export PATH=/usr/lib64/ccache:$PATH &&"
-ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
     echo Building with -j$MAKE_PROC_LIMIT && \

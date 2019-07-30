@@ -87,7 +87,6 @@ RUN curl -LO https://github.com/ccache/ccache/releases/download/v3.4.1/ccache-3.
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="export PATH=/usr/lib/ccache:$PATH &&"
 ENV CMAKE_EXTRAS="$CMAKE_EXTRAS -DCMAKE_TOOLCHAIN_FILE='/tmp/pinned_toolchain.cmake' -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
-ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
     echo Building with -j$MAKE_PROC_LIMIT && \

@@ -76,7 +76,6 @@ RUN curl -LO http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c
 # CMAKE_EXTRAS: Executed right before the cmake path (on the end)
 ENV PRE_COMMANDS="export PATH=/usr/lib64/ccache:$PATH &&"
 ENV CMAKE_EXTRAS="-DCMAKE_CXX_COMPILER='clang++' -DCMAKE_C_COMPILER='clang'"
-ENV NPROC="$(nproc)"
 
 CMD bash -c "$PRE_COMMANDS ccache -s && \
     echo Building with -j$MAKE_PROC_LIMIT && \
