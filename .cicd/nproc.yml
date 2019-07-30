@@ -20,6 +20,8 @@ steps:
       - docker#v3.3.0:
           debug: $DEBUG
           image: "eosio/producer:eosio-amazonlinux-2-316efdf69bdf206d33a085adc5f3417729c240f1"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_AMAZON_LINUX_2
 
@@ -30,6 +32,8 @@ steps:
       - docker#v3.3.0:
           debug: $DEBUG
           image: "eosio/producer:eosio-centos-7-5439ba983e48f62def8015a286690130dd86ccea"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_CENTOS_7
 
@@ -40,6 +44,8 @@ steps:
       - docker#v3.3.0:
           debug: $DEBUG
           image: "eosio/producer:eosio-ubuntu-16.04-c61a03f418bf32b4a353e01b6b38fd22a38151f3"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_16
 
@@ -50,6 +56,8 @@ steps:
       - docker#v3.3.0:
           debug: $DEBUG
           image: "eosio/producer:eosio-ubuntu-18.04-697aa59dddda9b803a75275442041d2302b38e9d"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_18
 
@@ -59,7 +67,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-amazonlinux-2-9b47693c41ecdf8a0546da9f937bc6ae5202dd66"
+          image: "eosio/producer:eosio-amazonlinux-2-316efdf69bdf206d33a085adc5f3417729c240f1"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_AMAZON_LINUX_2
 
@@ -69,7 +79,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-centos-7-a39edc35545632a7d9b0798d88831d703ac07df1"
+          image: "eosio/producer:eosio-centos-7-5439ba983e48f62def8015a286690130dd86ccea"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_CENTOS_7
 
@@ -79,7 +91,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-ubuntu-16.04-260bb69006f82adf7ae33ea215f77d7eabb56289"
+          image: "eosio/producer:eosio-ubuntu-16.04-c61a03f418bf32b4a353e01b6b38fd22a38151f3"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_16
 
@@ -89,7 +103,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-ubuntu-18.04-ca8436b076ee2c04a1163fd58cf9190c51816094"
+          image: "eosio/producer:eosio-ubuntu-18.04-697aa59dddda9b803a75275442041d2302b38e9d"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_18
 
@@ -99,7 +115,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-amazonlinux-2-9b47693c41ecdf8a0546da9f937bc6ae5202dd66"
+          image: "eosio/producer:eosio-amazonlinux-2-316efdf69bdf206d33a085adc5f3417729c240f1"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_AMAZON_LINUX_2
 
@@ -109,7 +127,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-centos-7-a39edc35545632a7d9b0798d88831d703ac07df1"
+          image: "eosio/producer:eosio-centos-7-5439ba983e48f62def8015a286690130dd86ccea"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_CENTOS_7
 
@@ -119,7 +139,9 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-ubuntu-16.04-260bb69006f82adf7ae33ea215f77d7eabb56289"
+          image: "eosio/producer:eosio-ubuntu-16.04-c61a03f418bf32b4a353e01b6b38fd22a38151f3"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_16
 
@@ -129,6 +151,8 @@ steps:
     plugins:
       - docker#v3.3.0:
           debug: $DEBUG
-          image: "eosio/producer:eosio-ubuntu-18.04-ca8436b076ee2c04a1163fd58cf9190c51816094"
+          image: "eosio/producer:eosio-ubuntu-18.04-697aa59dddda9b803a75275442041d2302b38e9d"
+          environment:
+            - "MAKE_PROC_LIMIT=32"
     timeout: $BUILD_TIMEOUT
     skip: $SKIP_UBUNTU_18
