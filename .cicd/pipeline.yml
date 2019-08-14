@@ -10,7 +10,7 @@ steps:
     agents:
       queue: "automation-eos-builder-fleet"
     timeout: ${TIMEOUT:-10}
-    skip: ${SKIP_AMAZON_LINUX_2:-$$([[ $SKIP_BUILDS == true ]] && true || false)}
+    skip: ${SKIP_AMAZON_LINUX_2:-$([[ $SKIP_BUILDS == true ]] && echo true || echo false)}
 
   # - label: ":centos: CentOS 7.6 - Build"
   #   command:
