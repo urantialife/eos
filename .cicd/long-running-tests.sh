@@ -30,6 +30,6 @@ else # Linux
         done < "$BUILDKITE_ENV_FILE"
     fi
 
-    execute eval docker run $ARGS $evars $FULL_TAG sh -c \"$COMMANDS\"
+    fold-execute eval docker run $ARGS $evars $FULL_TAG sh -c \"$COMMANDS\"
 
 fi
