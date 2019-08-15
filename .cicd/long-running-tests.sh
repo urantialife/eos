@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 . ./.cicd/helpers/general.sh
+. ./.cicd/helpers/.logging-helpers
 
 TEST="ctest -L long_running_tests --output-on-failure -T Test"
 
@@ -29,6 +30,6 @@ else # Linux
         done < "$BUILDKITE_ENV_FILE"
     fi
 
-    eval docker run $ARGS $evars $FULL_TAG sh -c \"$COMMANDS\"
+    execute eval docker run $ARGS $evars $FULL_TAG sh -c \"$COMMANDS\"
 
 fi
