@@ -215,7 +215,7 @@ steps:
       IMAGE_TAG: "amazonlinux-2"
       BUILDKITE_AGENT_ACCESS_TOKEN:
     agents:
-      queue: "automation-large-builder-fleet"
+      queue: "automation-eos-builder-fleet"
     timeout: ${TIMEOUT:-10}
     skip: ${SKIP_AMAZON_LINUX_2}${SKIP_LONG_RUNNING_TESTS:-true}
 
