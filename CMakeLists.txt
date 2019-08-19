@@ -104,6 +104,7 @@ if( APPLE AND UNIX )
 # Apple Specific Options Here
     message( STATUS "Configuring EOSIO on macOS" )
     set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -Wall -Wno-deprecated-declarations" )
+    set( CMAKE_EXE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation" )
 else()
     # Linux Specific Options Here
     message( STATUS "Configuring EOSIO on Linux" )
