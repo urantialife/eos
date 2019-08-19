@@ -29,6 +29,6 @@ else # Linux
         done < "$BUILDKITE_ENV_FILE"
     fi
 
-    eval docker run $ARGS $evars $FULL_TAG bash -c \"$COMMANDS\"
+    travis_wait 180 eval docker run $ARGS $evars $FULL_TAG bash -c \"$COMMANDS\"
 
 fi
