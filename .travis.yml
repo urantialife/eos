@@ -9,7 +9,7 @@ if: fork = true OR type = api OR type = cron
 
 matrix:
   include:
-    - build-unit-serial: &build-unit-serial "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/parallel-tests.sh && ./.cicd/serial-tests.sh"
+    - build_unit_serial: &build_unit_serial "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/parallel-tests.sh && ./.cicd/serial-tests.sh"
 
     - stage:
       name: "[Ubuntu 18.04] Build & Unit/Serial Tests"
@@ -18,7 +18,7 @@ matrix:
       services: docker
       env:
         - IMAGE_TAG='ubuntu-18.04'
-      script: *build-unit-serial
+      script: *build_unit_serial
     - stage:
       name: "[Ubuntu 18.04] Build & Long Running Tests"
       os: linux
