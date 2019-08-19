@@ -11,7 +11,25 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 if (UNIX AND APPLE)
-   list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/llvm@4" "/usr/local/opt/gettext")
+    # Conan (https://conan.io/)
+    include(${CMAKE_BINARY_DIR}/.conan/conan.cmake)
+
+    conan_check(VERSION 1.0.0 REQUIRED)
+
+    conan_add_remote(NAME bincrafters INDEX 1
+        URL https://api.bintray.com/conan/bincrafters/public-conan)
+
+    conan_cmake_run(CONANFILE .conan/macOS.txt
+                    BASIC_SETUP
+                    CMAKE_TARGETS
+                    TARGETS
+                    NO_OUTPUT_DIRS
+                    BUILD missing)
+
+    set(Intl_LIBRARY ${CONAN_LIB_DIRS_GETTEXT}/libgnuintl.a)
+    # End Conan
+
+    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/llvm@4" "/usr/local/opt/gettext")
 endif()
 
 include( GNUInstallDirs )

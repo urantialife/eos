@@ -84,3 +84,7 @@ var/lib/node_*
 .idea/
 *.iws
 .DS_Store
+
+conan*.txt
+conan*.lock
+!.conan/*
