@@ -8,16 +8,22 @@ cache:
 if: fork = true OR type = api OR type = cron
 matrix:
   include:
-    - stage: "Build & Unit/Serial Tests"
-      script: "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/parallel-tests.sh && ./.cicd/serial-tests.sh"
-    - stage: "Build & Long Running Tests"
-      script: "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/long-running-tests.sh"
-
-    - os: linux
+    - stage:
+      name: "Build & Unit/Serial Tests: Ubuntu 18"
+      os: linux
       dist: xenial
       services: docker
       env:
         - IMAGE_TAG='ubuntu-18.04'
+      script: "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/parallel-tests.sh && ./.cicd/serial-tests.sh"
+    - stage:
+      name: "Build & Long Running Tests: Ubuntu 18"
+      os: linux
+      dist: xenial
+      services: docker
+      env:
+        - IMAGE_TAG='ubuntu-18.04'
+      script: "ccache --max-size=1G && ./.cicd/build.sh && ./.cicd/long-running-tests.sh"
     - os: linux
       dist: xenial
       services: docker
