@@ -26,6 +26,8 @@ conan_cmake_run(CONANFILE .conan/conanfile.txt
                 BUILD missing)
 
 set(Intl_LIBRARY ${CONAN_LIB_DIRS_GETTEXT}/libgnuintl.a)
+include_directories(${CONAN_INCLUDE_DIRS_LIBCURL} ${CONAN_INCLUDE_DIRS_OPENSSL})
+link_directories(${CONAN_LIB_DIRS_OPENSSL} ${CONAN_LIB_DIRS_LIBCURL} ${CONAN_LIB_DIRS_ZLIB})
 # End Conan
 
 if (UNIX AND APPLE)
