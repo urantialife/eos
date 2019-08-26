@@ -8,7 +8,7 @@ if [[ $(uname) == 'Darwin' ]]; then
 
     # You can't use chained commands in execute
     cd $BUILD_DIR
-    bash -c "$TEST"
+    travis_wait 180 bash -c "$TEST"
 
 else # Linux
 
