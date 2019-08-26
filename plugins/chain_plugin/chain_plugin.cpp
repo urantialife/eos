@@ -848,16 +848,15 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
          }
 
          if( options.count( "chain-id" ) ) {
-//            auto ci = options.at( "chain-id" ).as<string>();
-//            const chain_id_type passed_chain_id = fc::json::from_string(ci).as<chain_id_type>();
-            auto get_chain_id = [chain_id=options.at( "chain-id" )]() {
+            auto ci = options.at( "chain-id" );
+            auto get_chain_id = [chain_id=ci.as<string>()]() {
                try {
-                  return chain_id.as<chain_id_type>();
+                  return fc::json::from_string(chain_id).as<chain_id_type>();
                } catch ( fc::exception& e ) {
                   elog("Malformed chain id");
                   throw e;
                }};
-            const chain_id_type passed_chain_id = options.at( "chain-id" ).as<chain_id_type>();
+            const chain_id_type passed_chain_id = get_chain_id();
             if( my->chain_id ) {
                EOS_ASSERT( *my->chain_id == passed_chain_id, plugin_config_exception,
                            "chain id provided via command line arguments does not match the existing chain id in the ${source}. "
@@ -888,6 +887,9 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
             }
          }
 
+         if (my->chain_id) {
+            ilog("chain id set to: ${ci} by ${source}", ("ci", my->chain_id)("source", my->chain_id_source));
+         }
       } else {
          bfs::path genesis_file;
          bool genesis_timestamp_specified = false;
@@ -918,12 +920,7 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
 
             my->chain_config->genesis = fc::json::from_file( genesis_file ).as<genesis_state>();
             const auto chain_id_from_gs = my->chain_config->genesis->compute_chain_id();
-            if ( my->chain_id ) {
-               EOS_ASSERT( *my->chain_id == chain_id_from_gs, plugin_config_exception,
-                           "Genesis state's chain id provided via command line arguments does not match the existing chain id in the ${source}. "
-                           "Providing a genesis state argument is not required.", ("source", my->chain_id_source)
-               );
-            } else {
+            if ( !my->chain_id ) {
                my->chain_id = chain_id_from_gs;
                my->chain_id_source = "genesis-json";
             }
@@ -939,7 +936,14 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
          }
 
          if( options.count( "chain-id" )) {
-            const chain_id_type passed_chain_id = options.at( "chain-id" ).as<chain_id_type>();
+            auto get_chain_id = [chain_id=options.at( "chain-id" ).as<string>()]() {
+               try {
+                  return fc::json::from_string(chain_id).as<chain_id_type>();
+               } catch ( fc::exception& e ) {
+                  elog("Malformed chain id");
+                  throw e;
+               }};
+            const chain_id_type passed_chain_id = get_chain_id();
             if (my->chain_id) {
                EOS_ASSERT( *my->chain_id == passed_chain_id, plugin_config_exception,
                            "chain id provided via command line arguments does not match the existing chain id in the ${source}. "
@@ -951,7 +955,7 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
                            "Must provide \"--genesis-json\" option since no existing block log."
                );
                EOS_ASSERT( my->chain_config->genesis->compute_chain_id() == passed_chain_id, plugin_config_exception,
-                           "chain id provided via command line arguments does not match the existing chain id in the genesis state. "
+                           "chain id provided via command line arguments does not match the existing chain id in the default genesis state. "
                            "Providing a chain id argument is not required."
                );
                my->chain_id = passed_chain_id;
@@ -959,7 +963,7 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
             }
          }
 
-         if( !existing_genesis && !my->chain_id ) {
+         if( !existing_genesis ) {
             if( !genesis_file.empty() ) {
                if( genesis_timestamp_specified ) {
                   ilog( "Using genesis state provided in '${genesis}' but with adjusted genesis timestamp",
@@ -973,9 +977,12 @@ void chain_plugin::plugin_initialize(const variables_map& options) {
             } else {
                wlog( "Starting up fresh blockchain with default genesis state." );
             }
-            my->chain_id = my->chain_config->genesis->compute_chain_id();
-            my->chain_id_source = "default genesis state";
-         } else if( existing_genesis ) {
+
+            if( !my->chain_id ) {
+               my->chain_id = my->chain_config->genesis->compute_chain_id();
+               my->chain_id_source = "default genesis state";
+            }
+         } else {
             EOS_ASSERT( my->chain_config->genesis == *existing_genesis, plugin_config_exception,
                         "Genesis state provided via command line arguments does not match the existing genesis state in blocks.log. "
                         "It is not necessary to provide genesis state arguments when a blocks.log file already exists."
