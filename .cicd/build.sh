@@ -43,7 +43,7 @@ else # Linux
         CMAKE_EXTRAS="$CMAKE_EXTRAS -DCMAKE_CXX_COMPILER='clang++' -DCMAKE_C_COMPILER='clang'"
     fi
 
-    BUILD_COMMANDS="cmake $CMAKE_EXTRAS -DBUILD_MONGO_DB_PLUGIN=true -DCMAKE_BUILD_TYPE='Release' .. && make -j$JOBS"
+    BUILD_COMMANDS="cmake $CMAKE_EXTRAS -DCMAKE_BUILD_TYPE='Release' .. && make -j$JOBS"
 
     # Docker Commands
     if [[ $BUILDKITE == true ]]; then
