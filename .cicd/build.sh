@@ -3,6 +3,7 @@ set -eo pipefail
 . ./.cicd/helpers/general.sh
 
 mkdir -p $BUILD_DIR
+CMAKE_EXTRAS="-DBUILD_MONGO_DB_PLUGIN=true"
 
 if [[ $(uname) == 'Darwin' ]]; then
 
