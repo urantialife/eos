@@ -11,7 +11,12 @@ if [[ $(uname) == 'Darwin' ]]; then
     # You can't use chained commands in execute
     cd $BUILD_DIR
     bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
-
+    if [[ $TRAVIS ]]; then
+        travis_wait 60 bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
+    else
+        bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
+    fi
+    
 else # Linux
 
     ARGS=${ARGS:-"--rm --init -v $(pwd):$MOUNTED_DIR"}
