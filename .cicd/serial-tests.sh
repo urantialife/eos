@@ -12,7 +12,7 @@ if [[ $(uname) == 'Darwin' ]]; then
     cd $BUILD_DIR
     bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
     if [[ $TRAVIS ]]; then
-        travis_wait 60 bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
+        bash -c "export PATH=\$PATH:~/mongodb/bin && travis_wait 60 $TEST"
     else
         bash -c "export PATH=\$PATH:~/mongodb/bin && $TEST"
     fi
